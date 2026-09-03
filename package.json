@@ -1,17 +1,27 @@
 {
-  "name": "cse340-course-repo",
+  "name": "cse340-hw",
   "version": "1.0.0",
-  "description": "Servidor Express básico para el curso CSE340",
-  "main": "server.js",
+  "description": "",
+  "homepage": "https://github.com/jsanchezb34/cse340-course-repo",
+  "bugs": {
+    "url": "https://github.com/jsanchezb34/cse340-course-repo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsanchezb34/cse340-course-repo"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "server.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon server.js",
     "start": "node server.js"
   },
   "dependencies": {
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.11"
   }
 }
