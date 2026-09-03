@@ -1,4 +1,17 @@
-"scripts": {
-  "dev": "nodemon",
-  "start": "node server.js"
-},
+{
+  "name": "cse340-course-repo",
+  "version": "1.0.0",
+  "description": "Servidor Express básico para el curso CSE340",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
