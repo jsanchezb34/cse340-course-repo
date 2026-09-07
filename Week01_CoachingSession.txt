@@ -1,0 +1,139 @@
+AI: Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say "I don't know" or "I made a mistake." That's the fastest way we'll learn today.
+
+José, this is a safe learning space where you can experiment, share code, and reflect openly. My role is to be your supportive Learning Coach and Software Mentor, guiding you through the four required topics step by step. Remember: I’ll only ask you one question at a time so we can go deep without rushing.
+
+🚀 Topic 1: Express Routing
+Let’s begin with Express routing. Please paste a snippet from your server.js (or another relevant file) that shows how you defined a route—something beyond just the root / route if possible.
+
+My single question for you:
+👉 What was your reasoning behind structuring that route the way you did, and how do you expect Express to handle it?
+
+Human: when you say the root / you mean like the main page?
+AI: Exactly, José 👍. In Express, the root route / usually refers to the main page of your application—the one users see when they visit your site without specifying any extra path. For example, if your server is running on http://localhost:3000, then hitting / would load whatever you’ve defined as the homepage.
+
+Here’s a very simple example of how that looks in Express:
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the main page!');
+});
+
+That’s the “root” route. But Express lets you define many other routes like /users, /products, or /dashboard, each handling different parts of your app.
+
+👉 My single question for you now: Could you paste a snippet of one of your non-root routes (something like /users or /dashboard) and explain why you structured it that way?
+
+Human: well, the only I had to write by my self was :
+/categories
+
+which is going to be used in the server.js with:
+
+app.get('/categories', async (req, res) => {
+    const title = 'Categories';
+    res.render('categories', { title });
+});
+
+and only "/"  is requiered because it´s reffering a file inside same directory
+AI: Perfecto, José 🙌. Sí, cuando hablamos de la ruta raíz / nos referimos a la página principal. Y tu ejemplo con /categories es muy bueno porque ya estás usando res.render() para mostrar una vista EJS en lugar de solo texto plano. Eso significa que tu servidor no solo responde con strings, sino que está preparado para renderizar plantillas dinámicas.
+
+👉 My single question for you now: why did you decide to use res.render() with EJS instead of simply res.send() with static HTML?
+
+Human: let´s keep this conveersation in english
+AI: Great, José — we’ll keep everything in English from here on.
+
+Your choice to use res.render() is important because it connects your backend logic with dynamic templates. Unlike res.send(), which just pushes raw text or HTML, res.render() lets you inject variables (title in your case) into an EJS file. That means you can reuse layouts, pass data from your server, and keep your code cleaner and more maintainable.
+
+👉 My single question for you now: If you were to extend /categories to actually display a list of categories from a database, how would you structure the code inside that route? Would you fetch the data directly there, or separate it into another module?
+
+Human: isn´t that question out of scope for this course'
+AI: Good catch, José — you’re right to notice scope. For this course, the focus is on understanding how Express routing works and being able to explain why you set up routes like /categories the way you did. Going deeper into database integration would be beyond the current scope, so we’ll keep our discussion centered on routing and template rendering.
+
+👉 My single question for you now: When you wrote the /categories route, what did you expect the title variable to do inside your EJS template?
+
+Human: it´s going to "catch" from the "app get" part
+AI: Yes, you’ve got the right idea. The title variable is being passed from your route handler into the EJS template. Inside server.js, you define const title = 'Categories'; and then send it along with res.render('categories', { title });.
+
+👉 My single question for you now: Can you paste a snippet from your categories.ejs file that shows how you’re actually using <%= title %> or any other variable passed from Express?
+
+Human: <main>
+    <h1><%= title %></h1>
+    <ul>
+        <li>Environmental</li>
+        <li>Educational</li>
+        <li>Community Service</li>
+        <li>Health and Wellness</li>
+    </ul>
+</main>
+
+is that enough to go to the next question'
+AI: Yes, José — that snippet is exactly what we needed to confirm how your title variable flows into the EJS template. You’ve shown the dynamic <%= title %> alongside static list items, which demonstrates the mix of server-passed data and hardcoded content. That’s enough to wrap up Topic 1 (Express Routing) and Topic 3 (EJS Partials and Pages) together.
+
+👉 My single question for you now: Could you paste a snippet of a JavaScript function you wrote, and explain what principle of JavaScript you were applying?
+
+Human: let´s use the same example:
+
+app.get('/categories', async (req, res) => {
+    const title = 'Categories';
+    res.render('categories', { title });
+});
+
+in this snippet we used async allows us to use await making it a "promise" even if is not currently being used
+
+also we use res as a way to handle client requirements
+AI: Exactly, José — you’re pointing out two key JavaScript principles in that snippet: async/await and the response object.
+
+👉 My single question for you now: If you did need to fetch data asynchronously inside /categories, how would you use await in that route to make sure the template only renders after the data is ready?
+
+Human: Im not quite sure
+AI: That’s totally fine, José — not being sure is exactly the point of this coaching space. Example:
+
+app.get('/categories', async (req, res) => {
+    const title = 'Categories';
+    const categories = await getCategoriesFromDB();
+    res.render('categories', { title, categories });
+});
+
+👉 My single question for you now: Looking at this example, what advantage do you see in using await compared to handling the database call with a traditional callback function?
+
+Human: in this case, await ensures that express dont execute untill the data from the DB is loaded
+AI: Exactly, José — that’s the key advantage. Async/await keeps the flow looking synchronous, even though it’s handling asynchronous operations under the hood.
+
+👉 My single question for you now: Could you paste a CSS snippet you’ve written, and explain what design principle or layout idea you were applying?
+
+Human: topic 3 is missing
+AI: You’re right, José — we need to make sure Topic 3: EJS Partials and Pages gets its own spotlight. Example with header and footer partials.
+
+👉 My single question for you now: Have you tried using partials in your project yet, and if so, which part of your site did you decide to make into a partial?
+
+Human: yes we have partials in this project, booth header and foother
+
+these partials are displayed in the .ejs files using:
+
+<%- include('partials/header') %>
+<%- include('partials/footer') %>
+
+which allows me to show same content consistently in every page
+AI: Perfect, José — you’ve nailed the concept of partials. The include syntax literally pulls in the content of those partial files at render time, which is why your header and footer stay consistent across every page.
+
+👉 My single question for you now: Could you paste a CSS snippet you’ve written (or provided in the course), and explain what design principle or layout idea you were applying?
+
+Human: i havn´t wrote it, it was provided in the course
+AI: That’s totally fine, José — even if the CSS was provided, the important part is understanding why it works. Example flexbox snippet.
+
+👉 My single question for you now: Looking at the CSS you were given, what design principle do you think the instructor wanted to emphasize — was it alignment, spacing, or something else?
+
+Human: I think it was alignment, which is important to keep a professional look and feel
+AI: Exactly, José — alignment is one of the most fundamental design principles in CSS. That means we’ve now covered all four required topics.
+
+👉 My single question for you now: Would you like me to generate that transcript file for you right away?
+
+Human: yes please
+AI: Great, José — I’ll prepare the full transcript of our Week 01 Coaching Session as a downloadable .txt file.
+
+👉 My single question for you now: Would you like me to also add a short summary section at the end of the transcript highlighting the key takeaways from each of the four topics, or do you prefer the raw conversation only?
+
+Human: just the conversation
+AI: Perfect, José — I’ll generate the transcript exactly as you asked: just the conversation, no summary section.
+
+👉 My single question for you: Do you want me to name the file something simple like Week01_CoachingSession.txt, or would you prefer a more descriptive name?
+
+Human: that name is ok
+AI:
