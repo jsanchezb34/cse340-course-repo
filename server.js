@@ -53,8 +53,10 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/organizations', async (req, res) => {
+    const organizations = await getAllOrganizations();
     const title = 'Our Partner Organizations';
-    res.render('organizations', { title });
+
+    res.render('organizations', {title, organizations });
 });
 
 app.get('/projects', async (req, res) => {
@@ -67,10 +69,3 @@ app.get('/categories', async (req, res) => {
     res.render('categories', { title });
 });
 
-app.get('/organizations', async (req, res) => {
-    const organizations = await getAllOrganizations();
-    console.log(organizations);
-      
-    const title = 'Our Partner Organizations';
-    res.render('organizations', { title });
-});
