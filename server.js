@@ -58,6 +58,7 @@ app.get('/organizations', async (req, res) => {
 
     res.render('organizations', { title, organizations });
 });
+
 app.get('/projects', async (req, res) => {
     const title = 'Service Projects';
     res.render('projects', { title });
