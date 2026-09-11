@@ -1,5 +1,7 @@
 Select * from organization;
 select * from project;
+Select * from category;
+Select * from project_category;
 
 -- ========================================
 -- tables creation
@@ -21,16 +23,29 @@ CREATE TABLE project (
     project_date DATE NOT NULL
 );
 
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE project_category (
+    project_id INT REFERENCES project(project_id) ON DELETE CASCADE,
+    category_id INT REFERENCES category(category_id) ON DELETE CASCADE,
+    PRIMARY KEY (project_id, category_id)
+);
+
 -- ========================================
 -- Insert sample data
 -- ========================================
+
+--organizaciones
 INSERT INTO organization (name, description, contact_email, logo_filename)
 VALUES
 ('BrightFuture Builders', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', 'info@brightfuturebuilders.org', 'brightfuture-logo.png'),
 ('GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.', 'contact@greenharvest.org', 'greenharvest-logo.png'),
 ('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives.', 'hello@unityserve.org', 'unityserve-logo.png');
 
-
+-- proyectos
 INSERT INTO project (
     organization_id,
     title,
@@ -58,3 +73,31 @@ INSERT INTO project (
 (3, 'Senior Care Initiative', 'Supporting elderly citizens with daily needs.', 'Cochabamba, Bolivia', '2026-10-25'),
 (3, 'Disaster Relief Support', 'Organizing aid for communities affected by floods.', 'Beni, Bolivia', '2026-11-08'),
 (3, 'Literacy Campaign', 'Promoting literacy among children and adults.', 'Santa Cruz, Bolivia', '2026-11-22');
+
+
+-- categorias
+INSERT INTO category (name) 
+VALUES
+('Community Infrastructure'),
+('Environment and Sustainability'),
+('Social and Educational Support');
+
+-- Asocia proyectos a categorias
+
+-- Community Infrastructure (category_id = 1)
+INSERT INTO project_category (project_id, category_id) VALUES
+(1, 1), -- Community Housing Initiative
+(2, 1), -- School Renovation Project
+(4, 1), -- Health Clinic Construction
+(5, 1), -- Playground Development
+(9, 1), -- Irrigation System Upgrade
+(6, 2), -- Urban Garden Expansion
+(7, 2), -- Organic Farming Training
+(8, 2), -- Tree Planting Campaign
+(10, 2),
+(3, 3), -- Youth Training Workshop
+(11, 3), -- Food Distribution Drive
+(12, 3), -- Volunteer Training Program
+(13, 3), -- Senior Care Initiative
+(14, 3), -- Disaster Relief Support
+(15, 3); 
