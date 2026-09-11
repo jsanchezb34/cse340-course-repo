@@ -7,6 +7,21 @@
     <p>Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.</p>
 
     <img class="main-logo" src="images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
+    
+    <h2>Service Projects</h2>
+  <ul>
+    <% if (projects && projects.length > 0) { %>
+      <% projects.forEach(project => { %>
+        <li>
+          Date: <%= project.project_date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) %>  
+           -- <%= project.title %> 
+         
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>No projects available at the moment.</li>
+    <% } %>
+  </ul>
 
 </main>
 
