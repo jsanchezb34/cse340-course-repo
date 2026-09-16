@@ -6,6 +6,7 @@ import { getAllOrganizations } from './src/models/organizations.js';
 import { getAllProjects } from './src/models/projects.js';
 import { getAllCategories } from './src/models/categories.js';
 
+// .....................Consts......................................
 
 // Define the application environment
 const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
@@ -19,9 +20,8 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-/**
-  * Configure Express middleware
-  */
+//...............middeware.......................................
+
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -45,6 +45,43 @@ app.use((req, res, next) => {
     res.locals.NODE_ENV = NODE_ENV;
     next();
 });
+
+//..................Rutas....................................
+
+/**
+  * Routes
+  */
+app.get('/', async (req, res) => {
+    const title = 'Home';
+    res.render('home', { title });
+});
+
+app.get('/organizations', async (req, res) => {
+    const organizations = await getAllOrganizations();
+    const title = 'Our Partner Organizations';
+
+    res.render('organizations', { title, organizations });
+});
+
+
+
+app.get('/projects', async (req, res) => {
+    const projects = await getAllProjects();
+    const title = 'Service Projects';
+
+    res.render('projects', { title, projects });
+
+});
+
+app.get('/categories', async (req, res) => {
+  
+    const categories = await getAllCategories();
+    const title = 'Categories';
+
+    res.render('categories', { title, categories });
+  
+});
+// .......error handlers...................................
 
 // Catch-all route for 404 errors
 app.use((req, res, next) => {
@@ -83,6 +120,8 @@ app.get('/test-error', (req, res, next) => {
 
 
 
+
+
 app.listen(PORT, async () => {
   try {
     await testConnection();
@@ -95,40 +134,5 @@ app.listen(PORT, async () => {
 
 
 
-/**
-  * Routes
-  */
-app.get('/', async (req, res) => {
-    const title = 'Home';
-    res.render('home', { title });
-});
-
-app.get('/organizations', async (req, res) => {
-    const organizations = await getAllOrganizations();
-    const title = 'Our Partner Organizations';
-
-    res.render('organizations', { title, organizations });
-});
-
-
-
-app.get('/projects', async (req, res) => {
-    const projects = await getAllProjects();
-    const title = 'Service Projects';
-
-    res.render('projects', { title, projects });
-
-});
-
-
-
-app.get('/categories', async (req, res) => {
-  
-    const categories = await getAllCategories();
-    const title = 'Categories';
-
-    res.render('categories', { title, categories });
-  
-});
 
 
