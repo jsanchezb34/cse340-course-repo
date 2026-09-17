@@ -1,6 +1,6 @@
-import { getAllCategories } from "../models/categories";
+import { getAllCategories } from "../models/categories.js";
 
-const ShowCategoriesPage = async (req, res) => {
+const showCategoriesPage = async (req, res) => {
         
     const categories = await getAllCategories();
     const title = 'Service Categories';
@@ -9,4 +9,4 @@ const ShowCategoriesPage = async (req, res) => {
   
 };
 
-export {ShowCategoriesPage} ;
+export {showCategoriesPage} ;
