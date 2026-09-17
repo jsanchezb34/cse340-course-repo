@@ -7,7 +7,7 @@ const getAllProjects = async () => {
       p.title,
       p.description,
       p.location,
-      p.project_date,
+      p.date,
       o.organization_id,
       o.name AS organization_name
     FROM public.project p
@@ -28,10 +28,10 @@ const getProjectsByOrganizationId = async (organizationId) => {
           title,
           description,
           location,
-          project_date
+          date
         FROM project
         WHERE organization_id = $1
-        ORDER BY project_date;
+        ORDER BY date;
       `;
       
       const queryParams = [organizationId];

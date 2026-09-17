@@ -20,7 +20,7 @@ CREATE TABLE project (
     title VARCHAR(150) NOT NULL,
     description TEXT NOT NULL,
     location VARCHAR(255) NOT NULL,
-    project_date DATE NOT NULL
+    date DATE NOT NULL
 );
 
 CREATE TABLE category (
