@@ -46,14 +46,14 @@ const getUpcomingProjects = async (number_of_projects) => {
             p.project_id,
             p.title,
             p.description,
-            p.project_date AS date,
+            p.date AS date,
             p.location,
             p.organization_id,
             o.name AS organization_name
         FROM public.project p
         JOIN public.organization o ON p.organization_id = o.organization_id
         WHERE p.project_date >= CURRENT_DATE
-        ORDER BY p.project_date ASC
+        ORDER BY p.date ASC
         LIMIT $1
     `;
     const result = await db.query(query, [number_of_projects]);

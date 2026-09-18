@@ -18,7 +18,7 @@ const getCategoryDetails = async (categoryId) => {
         SELECT
             category_id,
             name
-        FROM public.categories
+        FROM public.category
         WHERE category_id = $1
     `;
     const result = await db.query(query, [categoryId]);
@@ -31,7 +31,7 @@ const getProjectsByCategory = async (categoryId) => {
             p.project_id,
             p.title,
             p.description,
-            p.project_date AS date,
+            p.date AS date,
             p.location,
             p.organization_id,
             o.name AS organization_name
@@ -39,7 +39,7 @@ const getProjectsByCategory = async (categoryId) => {
         JOIN public.organization o ON p.organization_id = o.organization_id
         JOIN public.project_category pc ON p.project_id = pc.project_id
         WHERE pc.category_id = $1
-        ORDER BY p.project_date
+        ORDER BY p.date
     `;
     const result = await db.query(query, [categoryId]);
     return result.rows;
