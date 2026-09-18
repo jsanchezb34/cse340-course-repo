@@ -3,26 +3,15 @@
 <main>
     <h1><%= title %></h1>
 
-    <h2>Welcome to the CSE 340 Service Network!</h2>
-    <p>Our mission is to promote service across the world by connecting volunteers with service opportunities in their community.</p>
-
-    <img class="main-logo" src="images/cse340-service-network.png" alt="CSE 340 Service Network Logo">
-    
-    <h2>Service Projects</h2>
-  <ul>
-    <% if (projects && projects.length > 0) { %>
-      <% projects.forEach(project => { %>
-        <li>
-          Date: <%= project.project_date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) %>  
-           -- <%= project.title %> 
-         
-        </li>
-      <% }) %>
+    <% if (project) { %>
+        <p><strong>Description:</strong> <%= project.description %></p>
+        <p><strong>Date:</strong> <%= new Date(project.date).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) %></p>
+        <p><strong>Location:</strong> <%= project.location %></p>
+        <p><strong>Organization:</strong> <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></p>
     <% } else { %>
-      <li>No projects available at the moment.</li>
+        <p>Project not found.</p>
+        <a href="/projects">Back to projects</a>
     <% } %>
-  </ul>
-
 </main>
 
 <%- include('partials/footer') %>
