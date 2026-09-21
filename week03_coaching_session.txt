@@ -1,0 +1,312 @@
+Week 03 Coaching Session Transcript
+=====================================
+Date: September 19, 2026
+Student: Jose
+Coach: AI Learning Coach and Software Mentor
+=====================================
+
+COACH: Welcome! Just to be clear from the start, this is a coaching session, not a test. It is perfectly okay—and even encouraged—to say "I don't know" or "I made a mistake." That's the fastest way we'll learn today.
+
+I'm really glad you're here. Before we dive in, what's your name?
+
+JOSE: Im Jose
+
+COACH: Great to meet you, Jose! This is a safe space to explore, question, and learn — no pressure at all.
+
+To get us started: can you give me a quick overview of what your Week 03 assignment was about? What kind of application did you build?
+
+JOSE: The week topics where about midlewaren error handling and controlers and also routes and querys, we havn´t build any aplcation but we enhaced an existing one
+
+COACH: That's a great distinction to make — enhancing an existing application is actually really common in real-world development, so that's valuable experience!
+
+Let's start digging in. For our first topic, I'd love to talk about your models — specifically the functions that interact with your database.
+
+Can you paste a model function that accepts a parameter and uses it in a SQL query?
+
+JOSE:
+const getProjectsByCategory = async (categoryId) => {
+    const query = `
+        SELECT
+            p.project_id,
+            p.title,
+            p.description,
+            p.date AS date,
+            p.location,
+            p.organization_id,
+            o.name AS organization_name
+        FROM public.project p
+        JOIN public.organization o ON p.organization_id = o.organization_id
+        JOIN public.project_category pc ON p.project_id = pc.project_id
+        WHERE pc.category_id = $1
+        ORDER BY p.date
+    `;
+    const result = await db.query(query, [categoryId]);
+    return result.rows;
+};
+
+This is an snippet of my models/categories.js
+
+as I undestand, the parameters used are:
+
+  WHERE pc.category_id = $1
+        ORDER BY p.date
+
+which help me to retrieve the categories by ID and order fron newer to older
+
+COACH: Good start, Jose! You're right that $1 is the parameter placeholder — that's PostgreSQL's way of safely inserting values into a query.
+
+I do want to gently push back on one small detail though: when you say ORDER BY p.date retrieves from "newer to older" — what do you think the default sort order is in SQL when you don't specify a direction?
+
+JOSE: I think newer to older
+
+COACH: That's a common assumption! Actually, the default sort order in SQL is ascending — so ORDER BY p.date without any keyword would give you oldest to newest.
+
+If you wanted newest to oldest, you'd need to add DESC at the end, like this:
+
+ORDER BY p.date DESC
+
+No worries at all — this is exactly the kind of thing worth knowing!
+
+Now, staying with this function — can you explain to me why you think using $1 and passing [categoryId] as a separate argument is better than just writing the value directly into the query string?
+
+JOSE: As I undestand, using $1 as a placeholder is safer, because it prevents the sql injection
+
+COACH: Exactly right! That's called a parameterized query, and preventing SQL injection is precisely why it matters. Well done for knowing that.
+
+Now let's move to Topic 2 — Views. I'd love to see how you're using EJS to display data in your templates.
+
+Can you paste an EJS snippet where you're inserting data into a link — like a dynamic URL that changes based on the data?
+
+JOSE: this is the MAIN from my category.ejs:
+
+<main>
+    <h1><%= title %></h1>
+
+    <% if (projects && projects.length > 0) { %>
+        <ul>
+            <% projects.forEach(project => { %>
+                <li><a href="/project/<%= project.project_id %>"><%= project.title %></a></li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No projects found for this category.</p>
+    <% } %>
+</main>
+
+In the where <%%> is used to display the link whiich is buil dynamically
+
+COACH: Nice work! You've got some solid EJS here. I especially like that you included the if check before looping — that's good defensive thinking.
+
+You mentioned that <% %> is used to display the link — I want to make sure we're precise here. Looking at your code, there are actually two different EJS tags being used. Can you spot the difference between <% %> and <%= %> and tell me what each one does?
+
+JOSE: <%= %> are used to handle HTML content, for "fixed content" lets say
+
+COACH: You're on the right track thinking there's a difference, but let's sharpen it a bit!
+
+Actually it's the other way around:
+
+- <% %> — executes JavaScript logic (like your if and forEach) but outputs nothing to the page
+- <%= %> — executes JavaScript and outputs the result as text into the HTML
+
+So in your code, <%= project.title %> is what actually prints the project title on the page, while <% projects.forEach(...) %> just runs the loop silently.
+
+Does that distinction make sense?
+
+JOSE: kinda, can I have a comparison ?
+
+COACH: Sure! Think of it this way:
+
+<!-- This runs silently — nothing appears on the page -->
+<% const greeting = "Hello"; %>
+
+<!-- This prints the value — "Hello" appears on the page -->
+<%= greeting %>
+
+Another example closer to your code:
+
+<!-- This runs the loop silently -->
+<% projects.forEach(project => { %>
+
+    <!-- This prints the project title on the page -->
+    <p><%= project.title %></p>
+
+<% }) %>
+
+So <% %> is the engine working behind the scenes, and <%= %> is what shows up on screen.
+
+Does that clear it up?
+
+JOSE: I mean, how would you explain that for non programmers
+
+COACH: Great question! Here's a simple analogy:
+
+Imagine you're a chef following a recipe:
+
+- <% %> is like the steps you follow in the kitchen — "chop the vegetables, boil the water" — the customer never sees this happening, it's just work being done behind the scenes.
+
+- <%= %> is like plating the dish — this is what actually gets delivered to the table for the customer to see.
+
+So in your code, the forEach loop is the chef chopping — and <%= project.title %> is the dish being served on the page.
+
+Does that analogy work for you?
+
+JOSE: Makes sense
+
+COACH: Glad it clicked! You explained that well too — sometimes being able to translate technical concepts into plain language is just as important as writing the code itself.
+
+Now let's move to Topic 3 — Controllers. This is where your routes and logic live.
+
+Can you paste a route handler that uses a route parameter — something like /project/:id or similar?
+
+JOSE: some snippets from my routes.js related to this weeks assignment (category) are:
+
+we added "showCategoryDetailsPage"
+
+import { showCategoriesPage,showCategoryDetailsPage} from './controllers/categories.js';
+
+then
+
+router.get('/organization/:id', showOrganizationDetailsPage);
+
+COACH: Thanks for sharing that, Jose! I can see you imported showCategoryDetailsPage and there's a route with a parameter (/organization/:id).
+
+I notice though that the route shown uses :id for organizations, not categories.
+
+Can you paste the actual route line that uses showCategoryDetailsPage — the one that handles the category details with a route parameter?
+
+JOSE: router.get('/category/:id', showCategoryDetailsPage);
+
+this is the right one
+
+COACH: Perfect, that's the one! So :id here is the route parameter.
+
+Can you explain to me what happens step by step when a user visits a URL like /category/3 in the browser — how does that :id value eventually make it into your SQL query?
+
+JOSE: I know the "3" is the value that represents the category ID from the DB
+
+COACH: Good start! You've identified that 3 maps to the category ID in the database.
+
+But let's trace the full journey — after the user visits /category/3 in the browser, what happens next in your controller? Can you paste your showCategoryDetailsPage function so we can walk through it together?
+
+JOSE:
+const showCategoryDetailsPage = async (req, res, next) => {
+    try {
+        const categoryId = req.params.id;
+        const categoryDetails = await getCategoryDetails(categoryId);
+        const projects = await getProjectsByCategory(categoryId);
+        const title = categoryDetails.name;
+        res.render('category', { title, categoryDetails, projects });
+    } catch (error) {
+        next(error);
+    }
+};
+
+COACH: This is a really clean controller function, Jose! Let's trace that journey together:
+
+1. User visits /category/3
+2. req.params.id captures the 3 from the URL
+3. That value gets passed into getProjectsByCategory(categoryId) — which is exactly the model function you showed me earlier, where it becomes $1 in the SQL query!
+
+You can see how all three layers connect — route → controller → model.
+
+Now I want to ask about one specific line: you have next(error) inside your catch block. What do you think that does?
+
+JOSE: that is part of the error handling logic, Si la base de datos no logra devolver ese valor continuaría con la siguiente operacion??
+
+COACH: ¡Buena intuición, Jose! You're right that it's part of error handling — but next(error) doesn't continue to the next operation. It actually does something more specific.
+
+In Express, calling next(error) passes the error to your error-handling middleware — basically it's saying "something went wrong, I can't handle it here, please let the error handler take over."
+
+Which leads us perfectly into Topic 4 — Error Handling!
+
+Can you paste your error-handling middleware — the function that receives that error when next(error) is called?
+
+JOSE:
+const testErrorPage = (req, res, next) => {
+    const err = new Error('This is a test error');
+    err.status = 500;
+    next(err);
+};
+
+export {testErrorPage};
+
+So what is happening here is that in such case the message displayed would be 'This is a test error???
+
+COACH: Good thinking, but this one is actually a test route — it's used to manually trigger an error so you can make sure your error handler is working correctly. It's not the handler itself.
+
+What I'm looking for is the middleware that receives the error after next(err) is called — the function that decides what to show the user when something goes wrong.
+
+Can you look in your code for a function that has four parameters instead of three — something like (err, req, res, next)?
+
+JOSE:
+// Global error handler
+app.use((err, req, res, next) => {
+    // Log error details for debugging
+    console.error('Error occurred:', err.message);
+    console.error('Stack trace:', err.stack);
+    
+    // Determine status and template
+    const status = err.status || 500;
+    const template = status === 404 ? '404' : '500';
+    
+    // Prepare data for the template
+    const context = {
+        title: status === 404 ? 'Page Not Found' : 'Server Error',
+        error: err.message,
+        stack: err.stack
+    };
+    
+    // Render the appropriate error template
+    res.status(status).render(`errors/${template}`, context);
+});
+
+this is an error handling logic given in the preparation material
+
+COACH: This is excellent error handling, Jose! And great that you recognize it came from the preparation material — that shows good awareness.
+
+Let's make sure you understand what it's doing though. I want to focus on this specific line:
+
+const template = status === 404 ? '404' : '500';
+
+Can you explain in your own words what this line is deciding?
+
+JOSE: they are different error codes, 500 is the test case but 404 means something went wrong with the data retrieval from the DB
+
+COACH: Good attempt, Jose! But let's fine-tune that a bit — these two codes actually mean different things:
+
+- 404 means "Not Found" — the user tried to visit a page or resource that doesn't exist, like typing a wrong URL
+- 500 means "Internal Server Error" — something went wrong on the server side, like a database query failing or unexpected code error
+
+So 404 is more about the user requesting something that doesn't exist, and 500 is more about something breaking internally.
+
+With that in mind, can you think of a real example in your application that would trigger each one?
+
+JOSE: oh, got it
+So if the user clicks on a link whic leads to and deleted page would be a 404
+and the 500 would be the case of a Data babse desconected
+
+COACH: Exactly right, Jose! Those are perfect real-world examples:
+
+- 404 → user clicks a link to a deleted or non-existent page
+- 500 → database is down or disconnected and the server can't complete the request
+
+You've got a solid understanding of that now!
+
+We've actually covered all four topics today — models, views, controllers, and error handling. You did really well, especially with parameterized queries and tracing the full request journey from URL to SQL query.
+
+=====================================
+SESSION SUMMARY
+=====================================
+Topics Covered:
+  [✓] Topic 1 - Models: parameterized SQL queries, SQL injection prevention, sort order
+  [✓] Topic 2 - Views: EJS tags (<% %> vs <%= %>), dynamic links, defensive conditionals
+  [✓] Topic 3 - Controllers: route parameters, req.params, request flow (route → controller → model)
+  [✓] Topic 4 - Error Handling: next(error), global error middleware, 404 vs 500 status codes
+
+Key Corrections Made:
+  - ORDER BY defaults to ascending (oldest to newest), not descending
+  - <% %> runs logic silently; <%= %> outputs to the page
+  - next(error) passes to error middleware, not the next operation
+  - 404 = Not Found; 500 = Internal Server Error
+=====================================
+End of Session
