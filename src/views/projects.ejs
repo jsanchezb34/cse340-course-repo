@@ -13,8 +13,10 @@
     <% if (projects && projects.length > 0) { %>
       <% projects.forEach(project => { %>
         <li>
-          Date: <%= project.date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) %>  
-           -- <%= project.title %> 
+          <a href="/project/<%= project.project_id %>">
+            Date: <%= new Date(project.date).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) %>
+            -- <%= project.title %>
+        </a>
          
         </li>
       <% }) %>
