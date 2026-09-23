@@ -23,8 +23,6 @@ router.get('/project/:id', showProjectDetailsPage);
 // Route for new organization page
 router.get('/new-organization', showNewOrganizationForm);
 // Route to handle new organization form submission
-router.post('/new-organization', processNewOrganizationForm);
-// Route to handle new organization form submission
 router.post('/new-organization', organizationValidation, processNewOrganizationForm);
 
 
