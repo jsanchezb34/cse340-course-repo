@@ -30,6 +30,7 @@ const app = express();
 
 // Use flash message middleware
 app.use(flash);
+
 // Set up session management
 app.use(session({
     secret: SESSION_SECRET,
