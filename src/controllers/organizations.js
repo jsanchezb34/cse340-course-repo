@@ -1,6 +1,10 @@
-import { getAllOrganizations, getOrganizationDetails,createOrganization} from '../models/organizations.js';
+import {    getAllOrganizations, 
+            getOrganizationDetails,
+            createOrganization,
+            updateOrganization} from '../models/organizations.js';
 import { getProjectsByOrganizationId } from '../models/projects.js';
 import { body, validationResult } from 'express-validator';
+
 
 
 const showOrganizationsPage = async (req, res) => {
@@ -76,28 +80,17 @@ const showEditOrganizationForm = async (req, res) => {
     res.render('edit-organization', { title, organizationDetails });
 };
 
-const processEditOrganizationForm = async (req, res, next) => {
-    try {
-        const results = validationResult(req);
-        if (!results.isEmpty()) {
-            results.array().forEach((error) => {
-                req.flash('error', error.msg);
-            });
-            return res.redirect('/edit-organization/' + req.params.id);
-        }
+const processEditOrganizationForm = async (req, res) => {
+    const organizationId = req.params.id;
+    const { name, description, contactEmail, logoFilename } = req.body;
 
-        const organizationId = req.params.id;
-        const { name, description, contactEmail, logoFilename } = req.body;
+    await updateOrganization(organizationId, name, description, contactEmail, logoFilename);
+    
+    // Set a success flash message
+    req.flash('success', 'Organization updated successfully!');
 
-        await updateOrganization(organizationId, name, description, contactEmail, logoFilename);
-
-        req.flash('success', 'Organization updated successfully!');
-        res.redirect(`/organization/${organizationId}`);
-    } catch (error) {
-        next(error);
-    }
+    res.redirect(`/organization/${organizationId}`);
 };
-
 
 
 export { showOrganizationsPage, 
@@ -106,5 +99,5 @@ export { showOrganizationsPage,
         processNewOrganizationForm,
         organizationValidation,
         showEditOrganizationForm,
-        processEditOrganizationForm
+        processEditOrganizationForm,
     }
