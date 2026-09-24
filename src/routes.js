@@ -10,12 +10,19 @@ import { showOrganizationsPage,
          showEditOrganizationForm,
          processEditOrganizationForm
          } from './controllers/organizations.js';
+
 import { showProjectsPage, 
          showProjectDetailsPage, 
          showNewProjectForm, 
          processNewProjectForm,
          projectValidation } from './controllers/projects.js';
-import { showCategoriesPage,showCategoryDetailsPage} from './controllers/categories.js';
+
+import { showCategoriesPage,
+         showCategoryDetailsPage,
+         showAssignCategoriesForm,
+         processAssignCategoriesForm
+        } from './controllers/categories.js';
+        
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -41,7 +48,9 @@ router.get('/edit-organization/:id', showEditOrganizationForm);
 router.get('/new-project', showNewProjectForm);
 // Route to handle new project form submission
 router.post('/new-project', projectValidation, processNewProjectForm);
-
+// Routes to handle the assign categories to project form
+router.get('/assign-categories/:projectId', showAssignCategoriesForm);
+router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 
 
 
