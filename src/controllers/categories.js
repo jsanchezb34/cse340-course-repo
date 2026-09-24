@@ -1,8 +1,7 @@
 import { getAllCategories, 
          getCategoryDetails, 
          getProjectsByCategory,
-         getProjectDetails,
-         getCategoriesByServiceProjectId,
+         getCategoriesByproject,
          updateCategoryAssignments } from "../models/categories.js";
 
 import{ 
