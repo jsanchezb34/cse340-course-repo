@@ -1,7 +1,7 @@
 import { getAllCategories, 
          getCategoryDetails, 
          getProjectsByCategory,
-         getCategoriesByproject,
+         getCategoriesByProject,
          updateCategoryAssignments } from "../models/categories.js";
 
 import{ 
@@ -34,7 +34,7 @@ const showAssignCategoriesForm = async (req, res) => {
 
     const projectDetails = await getProjectDetails(projectId);
     const categories = await getAllCategories();
-    const assignedCategories = await getCategoriesByServiceProjectId(projectId);
+    const assignedCategories = await getCategoriesByProject(projectId);
 
     const title = 'Assign Categories to Project';
 
@@ -53,7 +53,6 @@ const processAssignCategoriesForm = async (req, res) => {
 };
 export { showCategoriesPage, 
          showCategoryDetailsPage, 
-         getProjectsByCategory,
          showAssignCategoriesForm,
          processAssignCategoriesForm
         };
