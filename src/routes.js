@@ -46,8 +46,6 @@ router.post('/new-project', projectValidation, processNewProjectForm);
 
 
 
-
-
 // error-handling routes
 router.get('/test-error', testErrorPage);
 
