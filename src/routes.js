@@ -23,7 +23,12 @@ import { showProjectsPage,
 import { showCategoriesPage,
          showCategoryDetailsPage,
          showAssignCategoriesForm,
-         processAssignCategoriesForm
+         processAssignCategoriesForm,
+         categoryValidation,
+         showNewCategoryForm,
+         processNewCategoryForm,
+         showEditCategoryForm,
+         processEditCategoryForm
         } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
 
@@ -55,6 +60,11 @@ router.post('/project/:projectId/assign-categories', processAssignCategoriesForm
 // Route to display the edit project form
 router.get('/edit-project/:id', showEditProjectForm);
 router.post('/edit-project/:id', projectValidation, processEditProjectForm);
+// Routes for W04 assigment
+router.get('/new-category', showNewCategoryForm);
+router.post('/new-category', categoryValidation, processNewCategoryForm);
+router.get('/edit-category/:id', showEditCategoryForm);
+router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
 
 
 

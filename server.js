@@ -28,8 +28,6 @@ const app = express();
 
 //...............middeware.......................................
 
-// Use flash message middleware
-app.use(flash);
 
 // Set up session management
 app.use(session({
