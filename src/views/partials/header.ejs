@@ -16,13 +16,14 @@
         </ul>
     </nav>
 
-     <% const messages = flash(); %>
-    <% Object.keys(messages).forEach(type => { %>
-        <% if (messages[type].length > 0) { %>
-            
-                <% messages[type].forEach(msg => { %>
-                    <%= msg %>
-                <% }); %>
-            
-        <% } %>
+<% const messages = flash(); %>
+<% if (messages.success && messages.success.length > 0) { %>
+    <% messages.success.forEach(msg => { %>
+        <div class="flash success"><%= msg %></div>
     <% }); %>
+<% } %>
+<% if (messages.error && messages.error.length > 0) { %>
+    <% messages.error.forEach(msg => { %>
+        <div class="flash error"><%= msg %></div>
+    <% }); %>
+<% } %>
