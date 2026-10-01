@@ -1,4 +1,4 @@
-
+import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js';
 import express from 'express';
 
 import { showOrganizationDetailsPage } from './controllers/organizations.js';
@@ -65,6 +65,9 @@ router.get('/new-category', showNewCategoryForm);
 router.post('/new-category', categoryValidation, processNewCategoryForm);
 router.get('/edit-category/:id', showEditCategoryForm);
 router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
+// User registration routes
+router.get('/register', showUserRegistrationForm);
+router.post('/register', processUserRegistrationForm);
 
 
 
