@@ -65,17 +65,14 @@ const processLogout = async (req, res) => {
     res.redirect('/login');
 };
 
+
+
 const requireLogin = (req, res, next) => {
     if (!req.session || !req.session.user) {
         req.flash('error', 'You must be logged in to access that page.');
         return res.redirect('/login');
     }
     next();
-};
-
-module.exports = {
-    // ... other exports
-    requireLogin
 };
 
 const showDashboard = (req, res) => {
@@ -87,7 +84,9 @@ const showDashboard = (req, res) => {
     });
 };
 
-export { showUserRegistrationForm, 
+
+
+module.exports = { showUserRegistrationForm, 
          processUserRegistrationForm, 
          showLoginForm, 
          processLoginForm,
