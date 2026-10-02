@@ -5,6 +5,7 @@ import { showUserRegistrationForm,
          showLoginForm,
          processLoginForm,
          processLogout,
+         requireLogin,
          showDashboard
          } from './controllers/users.js';
 
