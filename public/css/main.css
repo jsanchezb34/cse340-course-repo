@@ -65,15 +65,33 @@ main {
     border-radius: 8px;
 }
 
-ul {
+ul li {
     list-style:none;
     padding:5px;
 
 }
 
-main a {
-     display:flex;
-    justify-content:center;
+
+/*new-edit style*/
+
+.action-link {
+display: flex;
+width: fit-content;
+min-width: 150px;
+text-align: center;
+margin: 1rem auto;
+padding: 0.6rem 1rem;
+margin: 0.5rem 0;
+background-color: lightblue;
+color: #333;
+text-decoration: none;
+border-radius: 6px;
+font-weight: 600;
+transition: background-color 0.2s ease;
+}
+ 
+.action-link:hover {
+background-color: #1f4377;
 }
 
 /* Forms */

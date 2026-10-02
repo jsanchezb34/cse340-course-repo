@@ -24,7 +24,11 @@
       <li>No projects available at the moment.</li>
     <% } %>
   </ul>
-  <p><a href="/new-project">New Service Project</a></p>
+  
+  <% if (user && user.role_name === 'admin') { %>
+  <a href="/new-project" class="action-link">New Service Project</a>
+  <% } %>
+
 
 </main>
 

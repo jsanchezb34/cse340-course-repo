@@ -12,6 +12,10 @@
     <% } else { %>
         <p>No projects found for this category.</p>
     <% } %>
+    <% if (user && user.role_name === 'admin') { %>
+    <p><a href="/edit-category" class="action-link">Edit Category</a></p>
+    <% } %>
+   
+
 </main>
-<p><a href="/edit-category/<%= categoryDetails.category_id %>">Edit Category</a></p>
 <%- include('partials/footer') %>
