@@ -65,6 +65,7 @@ const processLogout = async (req, res) => {
     res.redirect('/login');
 };
 
+
 export { showUserRegistrationForm, 
          processUserRegistrationForm, 
          showLoginForm, 
