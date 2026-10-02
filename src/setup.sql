@@ -134,3 +134,5 @@ INSERT INTO project_category (project_id, category_id) VALUES
 (13, 3), -- Senior Care Initiative
 (14, 3), -- Disaster Relief Support
 (15, 3); 
+
+UPDATE users SET role_id = (SELECT role_id FROM roles WHERE role_name = 'admin') WHERE email = 'admin@example.com';

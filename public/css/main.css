@@ -57,6 +57,25 @@ body {
     border-color: #bee5eb;
 }
 
+/*main*/
+
+main {
+    background-color: #fff;
+    padding:20px;
+    border-radius: 8px;
+}
+
+ul {
+    list-style:none;
+    padding:5px;
+
+}
+
+main a {
+     display:flex;
+    justify-content:center;
+}
+
 /* Forms */
 form {
     display: flex;
