@@ -7,7 +7,8 @@ import { requireRole,
          processLoginForm,
          processLogout,
          requireLogin,
-         showDashboard
+         showDashboard,
+         showUsersPage
          } from './controllers/users.js';
 
 
@@ -91,6 +92,8 @@ router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 // Dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+// Users page route
+router.get('/users', showUsersPage);
 
 
 // error-handling routes

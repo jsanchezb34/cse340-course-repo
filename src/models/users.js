@@ -1,6 +1,22 @@
 import db from './db.js'
 import bcrypt from 'bcrypt';
 
+const getAllUsers = async () => {
+        const query = `
+        SELECT
+        user_id,
+        name,
+        email,
+        role_id,
+        created_at
+        FROM public.users
+        ORDER BY name;
+        `;
+         
+        const result = await db.query(query);
+        return result.rows;
+};
+
 const createUser = async (name, email, passwordHash) => {
     const default_role = 'user';
     const query = `
@@ -58,6 +74,7 @@ const authenticateUser = async (email, password) => {
     return userWithoutPassword;
 };
 
-export { createUser,
+export { getAllUsers,
+         createUser,
          authenticateUser
 };
