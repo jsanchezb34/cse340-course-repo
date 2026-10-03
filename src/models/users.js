@@ -2,20 +2,14 @@ import db from './db.js'
 import bcrypt from 'bcrypt';
 
 const getAllUsers = async () => {
-        const query = `
-        SELECT
-        user_id,
-        name,
-        email,
-        role_id,
-        created_at
-        FROM public.users
-        JOIN public.roles ON role_id = role_id
-        ORDER BY name;
-        `;
-         
-        const result = await db.query(query);
-        return result.rows;
+    const query = `
+        SELECT u.user_id, u.name, u.email, r.role_name, u.created_at
+        FROM public.users u
+        JOIN public.roles r ON u.role_id = r.role_id
+        ORDER BY u.name
+    `;
+    const result = await db.query(query);
+    return result.rows;
 };
 
 const createUser = async (name, email, passwordHash) => {
