@@ -80,7 +80,8 @@ const showDashboard = (req, res) => {
     res.render('dashboard', { 
         title: 'Dashboard',
         name: user.name,
-        email: user.email
+        email: user.email,
+        role: user.role_name
     });
 };
 

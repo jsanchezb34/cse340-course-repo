@@ -93,7 +93,7 @@ router.get('/logout', processLogout);
 // Dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
 // Users page route
-router.get('/users', showUsersPage);
+router.get('/users', requireRole('admin'), showUsersPage);
 
 
 // error-handling routes

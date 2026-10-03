@@ -10,6 +10,7 @@ const getAllUsers = async () => {
         role_id,
         created_at
         FROM public.users
+        JOIN public.roles ON role_id = role_id
         ORDER BY name;
         `;
          
@@ -41,7 +42,7 @@ const createUser = async (name, email, passwordHash) => {
 
 const findUserByEmail = async (email) => {
         const query = `
-            SELECT u.user_id, u.email, u.password_hash, r.role_name 
+            SELECT u.user_id, u.name, u.email, u.password_hash, r.role_name 
             FROM users u
             JOIN roles r ON u.role_id = r.role_id
             WHERE u.email = $1
