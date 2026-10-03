@@ -35,7 +35,7 @@ const findUserByEmail = async (email) => {
     const result = await db.query(query, queryParams);
 
     if (result.rows.length === 0) {
-        return null; // User not found
+        return null; 
     }
     
     return result.rows[0];
@@ -61,3 +61,5 @@ const authenticateUser = async (email, password) => {
 export { createUser,
          authenticateUser
 };
+
+// delete later
