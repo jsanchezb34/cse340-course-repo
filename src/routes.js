@@ -7,7 +7,8 @@ import { requireRole,
          processLoginForm,
          processLogout,
          requireLogin,
-         showDashboard
+         showDashboard,
+         showUsersPage
          } from './controllers/users.js';
 
 
@@ -81,7 +82,7 @@ router.post('/edit-project/:id', projectValidation, processEditProjectForm);
 router.get('/new-category', requireRole('admin'), showNewCategoryForm);
 router.post('/new-category', requireRole('admin'), categoryValidation, processNewCategoryForm);
 router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
-router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
+router.post('/edit-category/:id', requireRole('admin'),categoryValidation, processEditCategoryForm);
 // User registration routes
 router.get('/register', showUserRegistrationForm);
 router.post('/register', processUserRegistrationForm);
@@ -91,6 +92,8 @@ router.post('/login', processLoginForm);
 router.get('/logout', processLogout);
 // Dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+// Users page route
+router.get('/users', requireRole('admin'), showUsersPage);
 
 
 // error-handling routes
