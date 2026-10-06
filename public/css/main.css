@@ -168,3 +168,31 @@ button[type="submit"]:hover {
 button[type="submit"]:active {
     transform: scale(0.98);
 }
+
+.volunteer form,
+.inline-form {
+    display: inline;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+    box-shadow: none;
+}
+
+button[type="submit"].link-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 0 0 0.5rem;
+    color: #0b5cad;
+    font-size: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+button[type="submit"].link-button:hover {
+    background: none;
+    color: #073b73;
+    transform: none;
+}

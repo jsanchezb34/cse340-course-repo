@@ -43,6 +43,11 @@ import { showCategoriesPage,
          processEditCategoryForm
         } from './controllers/categories.js';
 
+import { processVolunteer, 
+         processUnvolunteer 
+        } from './controllers/volunteers.js';
+
+
 import { testErrorPage } from './controllers/errors.js';
 
 const router = express.Router();
@@ -94,6 +99,9 @@ router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
 // Users page route
 router.get('/users', requireRole('admin'), showUsersPage);
+// Volunteer routes
+router.post('/project/:id/volunteer', requireLogin, processVolunteer);
+router.post('/project/:id/unvolunteer', requireLogin, processUnvolunteer);
 
 
 // error-handling routes

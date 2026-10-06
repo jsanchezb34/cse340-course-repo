@@ -7,6 +7,8 @@ import { getUpcomingProjects,
 
 import { getAllOrganizations } from '../models/organizations.js';
 import { body, validationResult } from 'express-validator';
+import { getVolunteerProjectsByUserId } from '../models/volunteers.js';
+
 
 const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
@@ -40,17 +42,26 @@ const projectValidation = [
         .notEmpty().withMessage('Organization is required')
         .isInt().withMessage('Organization must be a valid integer')
 ];
+
+
 const showProjectDetailsPage = async (req, res, next) => {
     try {
         const projectId = req.params.id;
         const project = await getProjectDetails(projectId);
         const categories = await getCategoriesByProject(projectId);
+
+        let isVolunteering = false;
+        if (req.session && req.session.user) {
+            isVolunteering = await isUserVolunteering(req.session.user.user_id, projectId);
+        }
+
         const title = project.title;
-        res.render('project', { title, project, categories });
+        res.render('project', { title, project, categories, isVolunteering });
     } catch (error) {
         next(error);
     }
 };
+
 
 const showNewProjectForm = async (req, res) => {
     const organizations = await getAllOrganizations();
