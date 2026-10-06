@@ -32,16 +32,16 @@
             </form>
         <% } else { %>
             <form action="/project/<%= project.project_id %>/volunteer" method="POST">
-                <button type="submit" class="link-button">Volunteer for this project</button>
+                <button type="submit" class="action-link">Volunteer for this project</button>
             </form>
         <% } %>
     </div>
 <% } %>
 
-    <% if (user && user.role_name === 'admin') { %>
-    <p><a href="/project/<%= project.project_id %>/assign-categories" class="action-link">Edit Project Categories</a></p>
-    <p><a href="/edit-project/<%= project.project_id %>" class="action-link">Edit Project</a></p>
-    <% } %>
+        <% if (isAdmin) { %>
+            <a href="/edit-project/<%= project.project_id %>" class="action-link">Edit Project</a>
+            <a href="/project/<%= project.project_id %>/assign-categories" class="action-link">Edit Categories</a>
+        <% } %>
 </main>
 
 <%- include('partials/footer') %>
