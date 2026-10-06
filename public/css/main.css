@@ -30,33 +30,58 @@ body {
 }    
 
 /* Flash message styles */
-.alert {
+.flash {
     padding: 15px;
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
+    max-height: 200px;
+    overflow: hidden;
+    transform-origin: top center;
+    transition: opacity 0.5s ease, transform 0.5s ease,
+                max-height 0.5s ease, margin 0.5s ease, padding 0.5s ease;
 }
-.alert.success {
+
+.flash.success {
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
 }
-.alert.error {
+
+.flash.error {
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
-.alert.warning {
+
+.flash.warning {
     color: #856404;
     background-color: #fff3cd;
     border-color: #ffeeba;
 }
-.alert.info {
+
+.flash.info {
     color: #0c5460;
     background-color: #d1ecf1;
     border-color: #bee5eb;
 }
 
+.flash.flash-hide {
+    opacity: 0;
+    transform: scale(0.5);
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flash {
+        transition: none;
+    }
+}
 /*main*/
 
 main {
@@ -195,4 +220,62 @@ button[type="submit"].link-button:hover {
     background: none;
     color: #073b73;
     transform: none;
+}
+
+/* Volunteer projects list */
+.volunteer-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    display: grid;
+    gap: 1rem;
+}
+
+.volunteer-item {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+    grid-template-areas:
+        "title date remove"
+        "org   org  remove";
+    gap: 0.25rem 1rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.volunteer-title {
+    grid-area: title;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.volunteer-date {
+    grid-area: date;
+    font-size: 1.1rem;
+}
+
+.volunteer-org {
+    grid-area: org;
+    font-size: 0.8rem;
+}
+
+.volunteer-remove {
+    grid-area: remove;
+    display: block;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    background: none;
+    box-shadow: none;
+}
+
+@media (max-width: 600px) {
+    .volunteer-item {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "title remove"
+            "date  remove"
+            "org   remove";
+    }
 }

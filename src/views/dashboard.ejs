@@ -14,21 +14,21 @@
     <% } %>
 
     <h2>My Volunteer Projects</h2>
-        <% if (volunteerProjects.length > 0) { %>
-            <ul>
-                <% volunteerProjects.forEach(project => { %>
-                    <li>
-                        <a href="/project/<%= project.project_id %>"><%= project.title %></a>
-                        (<%= project.organization_name %>) -
-                        <%= new Date(project.date).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) %>
-                        <form action="/project/<%= project.project_id %>/unvolunteer" method="POST" class="inline-form">
-                            <input type="hidden" name="redirectTo" value="dashboard">
-                            <button type="submit" class="link-button">Remove</button>
-                        </form>
-                    </li>
-                <% }) %>
-            </ul>
-        <% } else { %>
+<% if (volunteerProjects.length > 0) { %>
+    <ul class="volunteer-list">
+        <% volunteerProjects.forEach(project => { %>
+            <li class="volunteer-item">
+                <a class="volunteer-title" href="/project/<%= project.project_id %>"><%= project.title %></a>
+                <span class="volunteer-date"><%= new Date(project.date).toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) %></span>
+                <span class="volunteer-org"><%= project.organization_name %></span>
+                <form action="/project/<%= project.project_id %>/unvolunteer" method="POST" class="volunteer-remove">
+                    <input type="hidden" name="redirectTo" value="dashboard">
+                    <button type="submit" class="link-button">Remove</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+<% } else { %>
     <p>You have not volunteered for any projects yet.</p>
 <% } %>
 </main>
