@@ -3,6 +3,9 @@ select * from project;
 Select * from category;
 Select * from project_category;
 SELECT * FROM roles;
+Select * From users;
+select * from project_volunteer;
+
 
 -- ========================================
 -- tables creation
@@ -49,6 +52,14 @@ CREATE TABLE users (
     role_id INTEGER REFERENCES roles(role_id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE project_volunteer (
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    project_id INT NOT NULL REFERENCES project(project_id) ON DELETE CASCADE,
+    volunteered_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, project_id)
+);
+
 
 -- ========================================
 -- Insert sample data
@@ -99,10 +110,21 @@ VALUES
 ('Social and Educational Support');
 
 -- Roles
-
 INSERT INTO roles (role_name, role_description) VALUES 
     ('user', 'Standard user with basic access'),
     ('admin', 'Administrator with full system access');
+
+-- sample info for project volunteer table--
+
+INSERT INTO project_volunteer (user_id, project_id) VALUES
+(2, 1),
+(2, 6),
+(4, 1),
+(4, 11),
+(5, 7),
+(6, 6),
+(6, 11)
+ON CONFLICT DO NOTHING;
 
 -- Insert a test user
 INSERT INTO users (name, email, password_hash, role_id) 

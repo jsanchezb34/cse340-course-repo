@@ -28,7 +28,7 @@
             <p>You are volunteering for this project.</p>
             <form action="/project/<%= project.project_id %>/unvolunteer" method="POST">
                 <input type="hidden" name="redirectTo" value="project">
-                <button type="submit" class="link-button">Remove me as a volunteer</button>
+                <button type="submit" class="action-link">Remove me as a volunteer</button>
             </form>
         <% } else { %>
             <form action="/project/<%= project.project_id %>/volunteer" method="POST">
