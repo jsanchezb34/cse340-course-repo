@@ -1,1 +1,32 @@
+name: Diagnóstico BCB
+
+# Se ejecuta a mano desde la pestaña Actions. No modifica nada del repositorio.
+on:
+  workflow_dispatch:
+
+jobs:
+  inspeccionar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar la página del BCB
+        run: |
+          curl -sS -L --max-time 60 \
+            -A "Mozilla/5.0 (compatible; finance-tracker-lite)" \
+            -o bcb.html \
+            -w "Código HTTP: %{http_code}\nTamaño: %{size_download} bytes\n" \
+            https://www.bcb.gob.bo/
+
+      - name: Mostrar el texto cercano a compra, venta y tipo de cambio
+        run: |
+          if grep -q -i -E "compra|venta|tipo de cambio|cotizaci" bcb.html; then
+            grep -o -i -E ".{0,100}(compra|venta|tipo de cambio|cotizaci).{0,200}" bcb.html | head -40
+          else
+            echo "No se encontraron coincidencias en el HTML descargado"
+          fi
+
+      - name: Guardar el HTML completo como archivo descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: bcb-html
+          path: bcb.html
 
